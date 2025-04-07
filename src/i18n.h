@@ -4,15 +4,18 @@
 #include <map>
 #include <string>
 
-enum class Language : uint32_t {
+enum class Language : uint32_t
+{
   ENGLISH,
   CHINESE,
   MAX,
 };
 
-class I18n {
- public:
-  enum class Key {
+class I18n
+{
+public:
+  enum class Key
+  {
     ASK_KEY_MAP,
     INPUT_ERROR,
     LOAD_PROGRESS_FAIL,
@@ -27,13 +30,13 @@ class I18n {
     ASK_DIFFICULTY,
   };
   using Dict = std::map<Key, std::string>;
-
-  static I18n& Instance();
+  // 此处单例模式是什么
+  static I18n &Instance();
   void SetLanguage(Language);
   std::string Get(Key) const;
 
- private:
+private:
   I18n();
 
-  Dict* dict_;
+  Dict *dict_;
 };

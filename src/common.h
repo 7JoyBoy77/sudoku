@@ -44,7 +44,8 @@ struct Normal : KeyMap
     }
 };
 
-struct Vim : KeyMap {
+struct Vim : KeyMap
+{
     Vim()
     {
         UP = 0x6B;
@@ -54,19 +55,21 @@ struct Vim : KeyMap {
     }
 };
 
-using point_t = struct point_t {
+using point_t = struct point_t
+{
     int x;
     int y;
 };
 
-using point_value_t = struct point_value_t {
+using point_value_t = struct point_value_t
+{
     int value;
     State state;
 };
 
 class CPointSort
 {
-  public:
+public:
     bool operator()(const point_t &lhs, const point_t &rhs) const
     {
         if ((lhs.x == rhs.x) && (lhs.y == rhs.y))

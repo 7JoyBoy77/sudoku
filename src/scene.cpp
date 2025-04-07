@@ -16,15 +16,15 @@
 #include "color.h"
 
 CScene::CScene(int index)
-    : _max_column(pow(index, 2))
-    , _cur_point({0, 0})
+    : _max_column(pow(index, 2)), _cur_point({0, 0})
 {
     init();
 }
 
 CScene::~CScene()
 {
-    if(keyMap) delete keyMap;
+    if (keyMap)
+        delete keyMap;
 }
 
 void CScene::show() const
@@ -55,36 +55,45 @@ void CScene::setMode(KeyMode mode)
     }
 }
 
-void CScene::printUnderline(int line_no) const {
+void CScene::printUnderline(int line_no) const
+{
     auto is_curline = (_cur_point.y == line_no);
-    for (int colunm = 0; colunm < 9; ++colunm) {
-        if((colunm%3) == 0 || line_no == -1 || (line_no+1)%3 == 0) {
+    for (int colunm = 0; colunm < 9; ++colunm)
+    {
+        if ((colunm % 3) == 0 || line_no == -1 || (line_no + 1) % 3 == 0)
+        {
             std::cout << Color::Modifier(Color::BOLD, Color::BG_DEFAULT, Color::FG_RED) << CORNER << Color::Modifier();
-        } else {
-            std::cout <<  CORNER;
+        }
+        else
+        {
+            std::cout << CORNER;
         }
         auto third_symbol = (is_curline && _cur_point.x == colunm) ? ARROW : LINE;
-        if(line_no == -1 || (line_no+1)%3 == 0) {
+        if (line_no == -1 || (line_no + 1) % 3 == 0)
+        {
             std::cout << Color::Modifier(Color::BOLD, Color::BG_DEFAULT, Color::FG_RED) << LINE << third_symbol << LINE << Color::Modifier();
-        } else {
+        }
+        else
+        {
             std::cout << LINE << third_symbol << LINE;
         }
     }
-    std::cout << Color::Modifier(Color::BOLD, Color::BG_DEFAULT, Color::FG_RED) << CORNER << Color::Modifier()<< std::endl;
+    std::cout << Color::Modifier(Color::BOLD, Color::BG_DEFAULT, Color::FG_RED) << CORNER << Color::Modifier() << std::endl;
 }
 
 void CScene::init()
 {
+    // memset初始化
     memset(_map, UNSELECTED, sizeof(_map));
 
     int col = 0;
     int row = 0;
 
-    for(col = 0; col < _max_column; ++col)
+    for (col = 0; col < _max_column; ++col)
     {
         CBlock column_block;
 
-        for(row = 0; row < _max_column; ++row)
+        for (row = 0; row < _max_column; ++row)
         {
             column_block.push_back(_map + row * _max_column + col);
         }
@@ -92,11 +101,11 @@ void CScene::init()
         _column_block[col] = column_block;
     }
 
-    for(row = 0; row < _max_column; ++row)
+    for (row = 0; row < _max_column; ++row)
     {
         CBlock row_block;
 
-        for(col = 0; col < _max_column; ++col)
+        for (col = 0; col < _max_column; ++col)
         {
             row_block.push_back(_map + row * _max_column + col);
         }
@@ -104,10 +113,9 @@ void CScene::init()
         _row_block[row] = row_block;
     }
 
-
-    for(row = 0; row < _max_column; ++row)
+    for (row = 0; row < _max_column; ++row)
     {
-        for(col = 0; col < _max_column; ++col)
+        for (col = 0; col < _max_column; ++col)
         {
             _xy_block[row / 3][col / 3].push_back(_map + row * _max_column + col);
         }
@@ -129,7 +137,7 @@ bool CScene::setCurValue(const int nCurValue, int &nLastValue)
         return false;
 }
 
-void CScene::setValue(const point_t& p, const int value)
+void CScene::setValue(const point_t &p, const int value)
 {
     _map[p.x + p.y * 9].value = value;
 }
@@ -146,11 +154,13 @@ void CScene::eraseRandomGrids(const int count)
     point_value_t p = {UNSELECTED, State::ERASED};
 
     std::vector<int> v(81);
-    for (int i = 0; i < 81; ++i) {
+    for (int i = 0; i < 81; ++i)
+    {
         v[i] = i;
     }
 
-    for (int i = 0; i < count; ++i) {
+    for (int i = 0; i < count; ++i)
+    {
         int r = random(0, v.size() - 1);
         _map[v[r]] = p;
         v.erase(v.begin() + r);
@@ -171,8 +181,8 @@ bool CScene::isComplete()
     {
         for (int col = 0; col < 9; ++col)
         {
-            if (!_row_block[row].isValid() || 
-                !_column_block[col].isValid() || 
+            if (!_row_block[row].isValid() ||
+                !_column_block[col].isValid() ||
                 !_xy_block[row / 3][col / 3].isValid())
                 return false;
         }
@@ -181,17 +191,20 @@ bool CScene::isComplete()
     return true;
 }
 
-bool CScene::save(const char *filename) {
-  auto filepath = std::filesystem::path(filename);
-  if (std::filesystem::exists(filepath)) {
-    return false;
-  }
+bool CScene::save(const char *filename)
+{
+    auto filepath = std::filesystem::path(filename);
+    if (std::filesystem::exists(filepath))
+    {
+        return false;
+    }
 
     std::fstream fs;
     fs.open(filename, std::fstream::in | std::fstream::out | std::fstream::app);
 
     // save _map
-    for (int i = 0; i < 81; i++) {
+    for (int i = 0; i < 81; i++)
+    {
         fs << _map[i].value << ' ' << static_cast<int>(_map[i].state) << std::endl;
     }
 
@@ -200,7 +213,8 @@ bool CScene::save(const char *filename) {
 
     // save _vCommand
     fs << _vCommand.size() << std::endl;
-    for (CCommand command : _vCommand) {
+    for (CCommand command : _vCommand)
+    {
         point_t point = command.getPoint();
         fs << point.x << ' ' << point.y << ' '
            << command.getPreValue() << ' '
@@ -211,17 +225,20 @@ bool CScene::save(const char *filename) {
     return true;
 }
 
-bool CScene::load(const char *filename) {
-  auto filepath = std::filesystem::path(filename);
-  if (!std::filesystem::exists(filepath)) {
-    return false;
-  }
+bool CScene::load(const char *filename)
+{
+    auto filepath = std::filesystem::path(filename);
+    if (!std::filesystem::exists(filepath))
+    {
+        return false;
+    }
 
     std::fstream fs;
     fs.open(filename, std::fstream::in | std::fstream::out | std::fstream::app);
 
     // load _map
-    for (int i = 0; i < 81; i++) {
+    for (int i = 0; i < 81; i++)
+    {
         int tmpState;
         fs >> _map[i].value >> tmpState;
         _map[i].state = static_cast<State>(tmpState);
@@ -233,7 +250,8 @@ bool CScene::load(const char *filename) {
     // load _vCommand
     int commandSize;
     fs >> commandSize;
-    for (int i = 0; i < commandSize; i++) {
+    for (int i = 0; i < commandSize; i++)
+    {
         point_t point;
         int preValue, curValue;
         fs >> point.x >> point.y >> preValue >> curValue;
@@ -259,7 +277,7 @@ void CScene::play()
             }
             else
             {
-                _vCommand.push_back(std::move(oCommand));  // XXX: move without move constructor
+                _vCommand.push_back(std::move(oCommand)); // XXX: move without move constructor
                 show();
                 continue;
             }
@@ -273,32 +291,42 @@ void CScene::play()
             {
                 message(I18n::Instance().Get(I18n::Key::ASK_SAVE));
                 std::cin >> strInput;
-                if (strInput[0] == 'y' || strInput[0] == 'Y') {
-                  do {
-                    message(I18n::Instance().Get(I18n::Key::ASK_SAVE_PATH));
-                    std::cin >> strInput;
-                    if (!save(strInput.c_str())) {
-                      message(I18n::Instance().Get(I18n::Key::FILE_EXIST_ERROR));
-                    } else {
-                      break;
-                    }
-                  } while (true);
+                if (strInput[0] == 'y' || strInput[0] == 'Y')
+                {
+                    do
+                    {
+                        message(I18n::Instance().Get(I18n::Key::ASK_SAVE_PATH));
+                        std::cin >> strInput;
+                        if (!save(strInput.c_str()))
+                        {
+                            message(I18n::Instance().Get(I18n::Key::FILE_EXIST_ERROR));
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    } while (true);
                 }
                 exit(0);
-            } else {
-              message(I18n::Instance().Get(I18n::Key::CONTINUE));
+            }
+            else
+            {
+                message(I18n::Instance().Get(I18n::Key::CONTINUE));
             }
         }
         else if (key == keyMap->U)
         {
-          if (_vCommand.empty()) {
-            message(I18n::Instance().Get(I18n::Key::UNDO_ERROR));
-          } else {
-            CCommand &oCommand = _vCommand.back();
-            oCommand.undo();
-            _vCommand.pop_back();
-            show();
-          }
+            if (_vCommand.empty())
+            {
+                message(I18n::Instance().Get(I18n::Key::UNDO_ERROR));
+            }
+            else
+            {
+                CCommand &oCommand = _vCommand.back();
+                oCommand.undo();
+                _vCommand.pop_back();
+                show();
+            }
         }
         else if (key == keyMap->LEFT)
         {
@@ -322,13 +350,16 @@ void CScene::play()
         }
         else if (key == keyMap->ENTER)
         {
-          if (isComplete()) {
-            message(I18n::Instance().Get(I18n::Key::CONGRATULATION));
-            getchar();
-            exit(0);
-          } else {
-            message(I18n::Instance().Get(I18n::Key::NOT_COMPLETED));
-          }
+            if (isComplete())
+            {
+                message(I18n::Instance().Get(I18n::Key::CONGRATULATION));
+                getchar();
+                exit(0);
+            }
+            else
+            {
+                message(I18n::Instance().Get(I18n::Key::NOT_COMPLETED));
+            }
         }
     }
 }
@@ -356,8 +387,8 @@ void CScene::generate()
     {
         std::vector<int> unit = shuffle_unit();
         int start_index = num * 3;
-        for (int i = start_index; i < start_index+3; i++)
-            for (int j = start_index; j < start_index+3; j++)
+        for (int i = start_index; i < start_index + 3; i++)
+            for (int j = start_index; j < start_index + 3; j++)
             {
                 matrix[i][j] = unit.back();
                 unit.pop_back();
@@ -372,7 +403,7 @@ void CScene::generate()
                 box_list.push_back(std::make_tuple(i, j));
 
     // 逐个填充空格
-    std::map<std::string, std::vector<int>> available_num {};
+    std::map<std::string, std::vector<int>> available_num{};
     int full_num = 0;
     int empty_num = box_list.size();
     while (full_num < empty_num)
@@ -386,8 +417,10 @@ void CScene::generate()
         {
             // 九宫格
             std::vector<int> able_unit = get_unit();
-            for(int i=row/3*3; i<row/3*3+3; i++){
-                for(int j=col/3*3; j<col/3*3+3; j++){
+            for (int i = row / 3 * 3; i < row / 3 * 3 + 3; i++)
+            {
+                for (int j = col / 3 * 3; j < col / 3 * 3 + 3; j++)
+                {
                     able_unit.erase(std::remove(able_unit.begin(), able_unit.end(), matrix[i][j]), able_unit.end());
                 }
             }
@@ -421,7 +454,6 @@ void CScene::generate()
             available_num[key].pop_back();
             full_num += 1;
         }
-
     }
 
     // 填入场景

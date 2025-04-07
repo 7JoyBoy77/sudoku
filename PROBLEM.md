@@ -1,0 +1,7 @@
+- [ ] 项目跑起来再debug 程序
+- [ ] enum class 和 enum
+- [ ] generator()如何保证打乱之后九宫格元素不重复
+- [ ] std::less<Key> 是什么？
+- [ ] std::remove()
+- [ ] 单例模式
+- [ ] memoryset()
