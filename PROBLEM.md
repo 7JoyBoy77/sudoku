@@ -5,3 +5,4 @@
 - [ ] std::remove()
 - [ ] 单例模式
 - [ ] memoryset()
+- [ ] I18创建english 和 chinese对象是要做什么，为什么可以这样创建

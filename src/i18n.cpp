@@ -34,26 +34,30 @@ I18n::Dict chinese = {
 // Default English
 I18n::I18n() : dict_(&english) {}
 
-I18n& I18n::Instance() {
+I18n &I18n::Instance()
+{
   static I18n i18n;
   return i18n;
 }
 
-void I18n::SetLanguage(Language language) {
-  switch (language) {
-    case Language::ENGLISH:
-      dict_ = &english;
-      break;
-    case Language::CHINESE:
-      dict_ = &chinese;
-      break;
-    case Language::MAX:
-    default:
-      assert(false);
+void I18n::SetLanguage(Language language)
+{
+  switch (language)
+  {
+  case Language::ENGLISH:
+    dict_ = &english;
+    break;
+  case Language::CHINESE:
+    dict_ = &chinese;
+    break;
+  case Language::MAX:
+  default:
+    assert(false);
   }
 }
 
-std::string I18n::Get(Key key) const {
+std::string I18n::Get(Key key) const
+{
   assert(dict_->count(key));
   return (*dict_)[key];
 }
