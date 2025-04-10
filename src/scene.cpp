@@ -390,9 +390,11 @@ void CScene::generate()
     {
         std::vector<int> unit = shuffle_unit();
         int start_index = num * 3;
+
         for (int i = start_index; i < start_index + 3; i++)
             for (int j = start_index; j < start_index + 3; j++)
             {
+                // 既然这样，为什么不封装成一个stack
                 matrix[i][j] = unit.back();
                 unit.pop_back();
             }
@@ -404,6 +406,8 @@ void CScene::generate()
         for (int j = 0; j < 9; j++)
             if (matrix[i][j] == 0)
                 box_list.push_back(std::make_tuple(i, j));
+
+    // 是这样来进行填充的吗？
 
     // 逐个填充空格
     std::map<std::string, std::vector<int>> available_num{};
