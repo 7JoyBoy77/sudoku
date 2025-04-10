@@ -29,8 +29,10 @@ public:
     NOT_COMPLETED,
     ASK_DIFFICULTY,
   };
+  // 此处map容器的作用是什么，定义了english和chinese两个map容器
   using Dict = std::map<Key, std::string>;
   // 此处单例模式是什么
+  // 此处应该就是全局访问点
   static I18n &Instance();
   void SetLanguage(Language);
   std::string Get(Key) const;

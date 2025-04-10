@@ -83,18 +83,20 @@ void CScene::printUnderline(int line_no) const
 
 void CScene::init()
 {
-    // memset初始化
+    // memset初始化，为什么要这样填充内存
     memset(_map, UNSELECTED, sizeof(_map));
 
     int col = 0;
     int row = 0;
-
+    // _column_block 初始化
     for (col = 0; col < _max_column; ++col)
     {
         CBlock column_block;
 
         for (row = 0; row < _max_column; ++row)
         {
+            // 将_map中的指针插入到column_block中，利用column_block以列的方式控制_map，也就是地图
+            // 中的值， 用于管理列的相关逻辑
             column_block.push_back(_map + row * _max_column + col);
         }
 
@@ -262,6 +264,7 @@ bool CScene::load(const char *filename)
 
 void CScene::play()
 {
+    // 将九宫格输出到屏幕
     show();
 
     char key = '\0';

@@ -17,6 +17,7 @@ public:
 
 private:
   int _count;
+  // 指针数组
   point_value_t *_numbers[MAX_COUNT];
 };
 

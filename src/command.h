@@ -3,12 +3,13 @@
 
 #include <memory>
 #include "common.h"
-
+// 类的前向声明
 class CScene;
+
 class CCommand
 {
 public:
-    CCommand(CScene* pOwner);
+    CCommand(CScene *pOwner);
     CCommand(CScene *pOwner, const point_t &point, int preValue, int curValue);
     CCommand(const CCommand &);
     ~CCommand();
@@ -23,10 +24,10 @@ public:
     void setCurValue(int curValue) { _nCurValue = curValue; }
 
 private:
-    CScene* _pOwner;
+    CScene *_pOwner;
     point_t _stPoint;
     int _nPreValue;
-    int _nCurValue;  // actually the member is never used
+    int _nCurValue; // actually the member is never used
 };
 
 #endif
