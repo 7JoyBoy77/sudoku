@@ -23,6 +23,7 @@ int inputDifficulty()
       Difficulty difficulty = static_cast<Difficulty>(std::stoi(cmd));
       switch (difficulty)
       {
+      // 这里不如作用域枚举难度
       case Difficulty::EASY:
         need_erase_grids = 20;
         break;
