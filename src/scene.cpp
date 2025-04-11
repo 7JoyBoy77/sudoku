@@ -266,8 +266,8 @@ void CScene::play()
 {
     // 将九宫格输出到屏幕
     show();
-
     char key = '\0';
+    // 这就是游戏的按键操控逻辑吗
     while (1)
     {
         key = _getch();
@@ -407,7 +407,7 @@ void CScene::generate()
             if (matrix[i][j] == 0)
                 box_list.push_back(std::make_tuple(i, j));
 
-    // 是这样来进行填充的吗？
+    // 是这样来进行填充的吗？下面的是具体的填空格逻辑
 
     // 逐个填充空格
     std::map<std::string, std::vector<int>> available_num{};
@@ -418,8 +418,10 @@ void CScene::generate()
         std::tuple<int, int> position = box_list[full_num];
         int row = std::get<0>(position);
         int col = std::get<1>(position);
+
         std::vector<int> able_unit;
         std::string key = std::to_string(row) + "x" + std::to_string(col);
+        // 没找到就会返回end()
         if (available_num.find(key) == available_num.end())
         {
             // 九宫格
@@ -439,6 +441,7 @@ void CScene::generate()
             for (int i = 0; i < 9; i++)
                 if (matrix[i][col] != 0)
                     able_unit.erase(std::remove(able_unit.begin(), able_unit.end(), matrix[i][col]), able_unit.end());
+            // 可用数字列表赋值给key对应的value
             available_num[key] = able_unit;
         }
         else
@@ -457,6 +460,7 @@ void CScene::generate()
         }
         else
         {
+            // 为matrix[row][col]赋值
             matrix[row][col] = available_num[key].back();
             available_num[key].pop_back();
             full_num += 1;

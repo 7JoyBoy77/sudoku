@@ -31,6 +31,8 @@ int main(int argc, char **argv)
     InputLanguage();
     int eraseGridNumber = inputDifficulty();
     scene.generate();
+    // 先产生一个完整的数独,然后根据难度删除指定数量的格子
+    // 难度设定相对简单
     scene.eraseRandomGrids(eraseGridNumber);
   }
   else if (argc == 3 && !strcmp(argv[1], "-l"))
