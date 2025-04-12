@@ -71,7 +71,7 @@ KeyMode inputKeyMode()
   } while (true);
 }
 
-void InputLanguage()
+void inputLanguage()
 {
   std::string language;
   do
@@ -80,7 +80,11 @@ void InputLanguage()
     std::cin >> language;
 
     try
+
     {
+      /**
+       * @note 为什么非要str to long 然后减一， 直接在枚举定义值不就好了，反正这里设计真傻呗
+       */
       auto l = static_cast<Language>(std::stoul(language) - 1);
       if (l < Language::MAX)
       {
@@ -90,8 +94,10 @@ void InputLanguage()
     }
     catch (...)
     {
+      message("test");
     }
 
     message(I18n::Instance().Get(I18n::Key::INPUT_ERROR));
   } while (true);
 }
+     

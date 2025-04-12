@@ -28,7 +28,7 @@ int main(int argc, char **argv)
 
   if (argc == 1)
   {
-    InputLanguage();
+    inputLanguage();
     int eraseGridNumber = inputDifficulty();
     scene.generate();
     // 先产生一个完整的数独,然后根据难度删除指定数量的格子
@@ -43,7 +43,7 @@ int main(int argc, char **argv)
       message(I18n::Instance().Get(I18n::Key::LOAD_PROGRESS_FAIL));
       return 0;
     }
-    InputLanguage();
+    inputLanguage();
   }
   else
   {

@@ -45,3 +45,11 @@ __如果后续有其他源文件需要使用 std::map<Key, std::string> 这种类型，那么将 Dict 
 - [ ] 类型不安全意味着编译器无法在编译阶段有效地检查和阻止不恰当的类型使用
 - [ ] 使用if_else语句控制play逻辑，处理play逻辑的方式
 - [ ] command类的设计是怎样的
+- [ ] std::move
+```
+CCommand oCommand(this);
+ _vCommand.push_back(std::move(oCommand));
+```
+- [ ] Vscode + Cmake 的学习
+- [ ] Doxygen注释规范
+- [ ] 为什么要重载setValue()

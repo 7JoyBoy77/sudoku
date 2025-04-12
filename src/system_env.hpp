@@ -4,7 +4,8 @@
 #include <Windows.h>
 #endif
 
-inline void SetWindowsEnv()
+inline void
+SetWindowsEnv()
 {
 #if _WIN32
   SetConsoleOutputCP(CP_UTF8);

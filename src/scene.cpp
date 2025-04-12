@@ -280,6 +280,7 @@ void CScene::play()
             }
             else
             {
+                // 命令向量的作用
                 _vCommand.push_back(std::move(oCommand)); // XXX: move without move constructor
                 show();
                 continue;
