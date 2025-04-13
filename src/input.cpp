@@ -100,4 +100,3 @@ void inputLanguage()
     message(I18n::Instance().Get(I18n::Key::INPUT_ERROR));
   } while (true);
 }
-     
