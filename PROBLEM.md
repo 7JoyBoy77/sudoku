@@ -1,21 +1,28 @@
+ - [ ] 一个非常重要的问题，这个项目如何做出来，需要怎样的步骤，然后再如何抽象成代码，我只会实现单一功能。
 ***不要一头钻到死，自己边写边去看代码学习，不要死弄懂一个项目而浪费时间*** 回头再看
 
 - [ ] 项目跑起来再debug 程序
-- [ ] enum class 和 enum
-- [ ] generator()如何保证打乱之后九宫格元素不重复
+- [x] enum class 和 enum
+- [x] generator()如何保证打乱之后九宫格元素不重复
 - [ ] std::less<Key> 是什么？
 - [ ] std::remove()
 - [ ] 单例模式
-- [ ] memoryset()
-- [ ] I18创建english 和 chinese对象是要做什么，为什么可以这样创建
-- [ ] KeyMap继承vim和normal的理解
-- [ ] 为什么要有指向按键映射的指针  play中的代码表示利用指针映射的按键操作
+- [ ] memset()  抽象东西，我难以理解
+- [x] I18创建english 和 chinese对象是要做什么，为什么可以这样创建 
+```
+english 和 chinese 是两个容器，方便传递给dictionary对象，dictionary对象是一个字典，存储了键值对，键是Key类型，值是
+std::string类型。
+```
+
+- [x] KeyMap继承vim和normal的理解
+`派生出键盘类，工具不同的键盘类创建对象`
+- [ ] 为什么要有指向按键映射的指针  play中的代码表示利用指针映射的按键操作 ***日后再论，有点模糊***
 ```
   // 指向按键映射对象的指针，初始化为空指针
   KeyMap *keyMap{};
 ```
 
-- [ ] 行列块，存储的意义
+- [x] 行列块，存储的意义
 ```
   // 列块数组，包含 9 个 CBlock 类型的对象，用于管理列相关的逻辑
   CBlock _column_block[9];
@@ -31,10 +38,10 @@
 - [ ] command.h 命令模式做了些什么
 - [ ] 在 C++ 中，enum class （强类型枚举）默认的底层类型是 int，但具体的大小和符号取决于编译器和平台。通过指定 : uint32_t，可以明确指定枚举的底层类型为 32 位无符号整数。这样可以避免不同平台上 int 类型大小不一致的问题，确保枚举的底层存储在所有平台上都是一致的。
 - [ ] color 和 modifier 的组合使用
-- [ ] 场景初始化时，界面如何输出出来
+- [x] 场景初始化时，界面如何输出出来
 - [ ]  CScene中 keyMap *keyMap scene和keymap的关系，两者耦合
 - [ ] memset初始化
-- [ ] I18n的别名定义在类中，但实例创建后是全局的,为什么要这么做，没有理解
+- [x] I18n的别名定义在类中，但实例创建后是全局的,为什么要这么做，没有理解
 ***如果后续需要修改 std::map<Key, std::string> 类型，比如将 std::map 替换为 std::unordered_map，就需要在所有使用该类型的地方进行修改，容易遗漏且工作量较大。***
 ```
   using Dict = std::map<Key, std::string>;
@@ -55,3 +62,4 @@ CCommand oCommand(this);
 - [ ] Vscode + Cmake 的学习
 - [ ] Doxygen注释规范
 - [ ] 为什么要重载setValue()
+- [ ] 学习如何从头开始一个项目
